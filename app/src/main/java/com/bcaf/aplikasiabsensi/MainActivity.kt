@@ -3,9 +3,9 @@ package com.bcaf.aplikasiabsensi
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,18 +13,33 @@ import androidx.core.view.WindowInsetsCompat
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+//        enableEdgeToEdge()
         setContentView(R.layout.activity_main)
         val username = intent.getStringExtra("username")
-        val textView = findViewById<TextView>(R.id.textView)
-        textView.text = "Selamat Datang , $username"
+        val textView = findViewById<TextView>(R.id.textView3)
+        textView.text = "Selamat Datang  \n, $username"
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        val imgProfile = findViewById<ImageView>(R.id.imgProfile)
+        imgProfile.setOnClickListener{
+            val implicitIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            //startActivity(implicitIntent)
+            startActivityForResult(implicitIntent,99)
+        }
+
+        val btnMenuAbsensi = findViewById<androidx.cardview.widget.CardView>(R.id.btnMenuAbsensi)
+
+        btnMenuAbsensi.setOnClickListener{
+            val intent = Intent(this, MenuAbsensi::class.java)
+            intent.putExtra("username", username)
+            startActivity(intent)
+        }
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rbWFO)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -34,4 +49,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+
 }

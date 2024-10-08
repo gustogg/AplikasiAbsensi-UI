@@ -3,8 +3,6 @@ package com.bcaf.aplikasiabsensi
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
@@ -15,13 +13,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bcaf.aplikasiabsensi.MainActivity
-import com.bcaf.aplikasiabsensi.R
 
 class Login : AppCompatActivity() {
 
     private lateinit var btnLogin: Button
-    private lateinit var registerbtn: Button
     private lateinit var imageLogo: ImageView
 
 
@@ -42,9 +37,12 @@ class Login : AppCompatActivity() {
         }
 
         btnLogin = findViewById(R.id.btnLogin)
-        registerbtn = findViewById(R.id.registerbtn)
 
-
+        val  btnRegister = findViewById<Button>(R.id.registerbtn)
+        btnRegister.setOnClickListener{
+            val intent = Intent(this, Registrasi::class.java)
+            startActivity(intent)
+        }
 
 
         btnLogin.setOnClickListener {
@@ -57,12 +55,8 @@ class Login : AppCompatActivity() {
             intent.putExtra("username", txtUsername.text.toString())
             startActivity(intent)
         }
-        registerbtn.setOnClickListener {
-            val intent2 = Intent(this, Register::class.java)
-            startActivity(intent2)
-        }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rbWFO)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
